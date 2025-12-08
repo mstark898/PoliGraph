@@ -1,0 +1,18 @@
+[
+  {
+    "extension_name": "Grammarly",
+    "extension_id": "kbfnbcaeplbcioakkpcpgfkobkghlhen",
+    "privacy_policy_url": "https://www.grammarly.com/privacy-policy",
+    "policy_analyzed": false,
+    "disclosure_analyzed": false,
+    "policy_categories": [],
+    "disclosure_categories": [],
+    "errors": [],
+    "disclosure_preprocessed": true,
+    "disclosure_raw_categories": [
+      "web_history",
+      "location",
+      "pii"
+    ]
+  }
+]

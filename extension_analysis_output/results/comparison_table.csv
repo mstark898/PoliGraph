@@ -1,0 +1,2 @@
+Extension,Extension ID,PII,Financial/Payment,Authentication,Location,Web History,Policy Analyzed,Disclosure Analyzed,Notes
+Grammarly,kbfnbcaeplbcioakkpcpgfkobkghlhen,disclosure_only,neither,neither,disclosure_only,disclosure_only,No,No,Policy not analyzed; Disclosure not analyzed (using raw categories)
