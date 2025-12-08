@@ -1,0 +1,14 @@
+Grammarly: AI Writing Assistant and Grammar Checker App  
+
+Grammarly: AI Writing Assistant and Grammar Checker App collects and processes the following types of data:
+Grammarly collects personally identifiable information including name, address, email address, age, or identification number.
+
+Grammarly collects personal communications including emails, texts, or chat messages.
+
+Grammarly collects location data including region, IP address, GPS coordinates, or information about things near the user's device.
+
+Grammarly collects user activity data including network monitoring, clicks, mouse position, scroll, or keystroke logging.
+
+Grammarly accesses website content including text, images, sounds, videos, or hyperlinks.
+
+Regarding data usage practices: Grammarly does not sell user data to third parties.
