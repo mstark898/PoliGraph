@@ -17,7 +17,12 @@ import os
 import re
 import json
 from typing import Optional
-import anthropic
+
+try:
+    import anthropic
+    HAS_ANTHROPIC = True
+except ImportError:
+    HAS_ANTHROPIC = False
 
 
 # Improved prompt template optimized for PoliGraph's verb patterns
