@@ -90,7 +90,7 @@ Not being used or transferred to determine creditworthiness or for lending purpo
     Extension(
         name="Keepa",
         extension_id="neebplgakaahbhdphmkckjjcegoiijjo",
-        privacy_policy_url="https://keepa.com/#!disclaimer",
+        privacy_policy_url="",  # Uses hash routing (#!disclaimer) which doesn't crawl well
         developer_disclosure="""Privacy practices
 Keepa - Amazon Price Tracker has disclosed the following information regarding the collection and usage of your data. More detailed information can be found in the developer's privacy policy.
 

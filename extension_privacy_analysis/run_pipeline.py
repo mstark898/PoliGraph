@@ -264,37 +264,47 @@ class ExtensionPrivacyPipeline:
         try:
             # For disclosures, we skip html_crawler since we already have the HTML
 
-            # Create a minimal accessibility_tree.json
-            html_path = disclosure_dir / "cleaned.html"
-            if not html_path.exists():
-                print(f"  - No cleaned.html found")
+            # Read the transformed disclosure text
+            transformed_path = disclosure_dir / "transformed_disclosure.txt"
+            if not transformed_path.exists():
+                print(f"  - No transformed_disclosure.txt found")
                 return False
 
-            # Read the HTML and create accessibility tree structure
-            with open(html_path, 'r', encoding='utf-8') as f:
-                html_content = f.read()
+            with open(transformed_path, 'r', encoding='utf-8') as f:
+                transformed_text = f.read()
 
-            # Extract text content for accessibility tree
-            import re
-            # Remove HTML tags to get text
-            text = re.sub(r'<[^>]+>', ' ', html_content)
-            text = re.sub(r'\s+', ' ', text).strip()
+            # Build proper accessibility tree structure that PoliGraph expects
+            # Split into paragraphs and create proper tree structure
+            paragraphs = [p.strip() for p in transformed_text.split('\n\n') if p.strip()]
 
-            # Create minimal accessibility tree
-            tree = {
-                "role": "RootWebArea",
-                "name": "Developer Disclosure",
+            children = []
+
+            # Add heading
+            children.append({
+                "role": "heading",
+                "level": 1,
                 "children": [
-                    {
-                        "role": "heading",
-                        "name": "Privacy Practices",
-                        "level": 1
-                    },
-                    {
-                        "role": "paragraph",
-                        "name": text
-                    }
+                    {"role": "text", "name": "Privacy Practices"}
                 ]
+            })
+
+            # Add each paragraph as a separate text element
+            for para in paragraphs:
+                # Split long paragraphs into sentences for better parsing
+                sentences = [s.strip() for s in para.replace('\n', ' ').split('. ') if s.strip()]
+                for sentence in sentences:
+                    if not sentence.endswith('.'):
+                        sentence += '.'
+                    children.append({
+                        "role": "paragraph",
+                        "children": [
+                            {"role": "text", "name": sentence}
+                        ]
+                    })
+
+            tree = {
+                "role": "document",
+                "children": children
             }
 
             tree_path = disclosure_dir / "accessibility_tree.json"
