@@ -1,12 +1,14 @@
 """
 Data category mapping for extension privacy analysis.
 
-Maps PoliGraph data types to the 5 analysis categories:
+Maps PoliGraph data types to the 7 analysis categories:
 1. PII (Personally Identifiable Information)
 2. Financial/Payment Data
 3. Authentication Data
 4. Location Data
 5. Web History Data
+6. User Activity Data
+7. Website Content Data
 """
 
 from enum import Enum
@@ -14,17 +16,17 @@ from typing import Set
 
 
 class DataCategory(Enum):
-    """The 5 main data categories for analysis."""
+    """The 7 main data categories for analysis."""
     PII = "pii"
     FINANCIAL = "financial"
     AUTHENTICATION = "authentication"
     LOCATION = "location"
     WEB_HISTORY = "web_history"
+    USER_ACTIVITY = "user_activity"
+    WEBSITE_CONTENT = "website_content"
 
 
-# Mapping from PoliGraph data types to our 5 categories
-# These are the data type names as they appear in PoliGraph's knowledge graph
-
+# Mapping from PoliGraph data types to our 7 categories
 CATEGORY_MAPPINGS = {
     DataCategory.PII: {
         # Core PII
@@ -32,6 +34,7 @@ CATEGORY_MAPPINGS = {
         "personal identifier",
         "personally identifiable information",
         "personal data",
+        "pii",
 
         # Names
         "name",
@@ -44,9 +47,11 @@ CATEGORY_MAPPINGS = {
         "username",
         "account name",
         "display name",
+        "user name",
 
         # Contact information
         "email address",
+        "email",
         "phone number",
         "mobile phone number",
         "telephone number",
@@ -55,6 +60,7 @@ CATEGORY_MAPPINGS = {
         "shipping address",
         "billing address",
         "street address",
+        "address",
         "zip code",
         "postal code",
         "contact information",
@@ -117,12 +123,15 @@ CATEGORY_MAPPINGS = {
         "message content",
         "sms content",
         "chat messages",
+        "communications",
     },
 
     DataCategory.FINANCIAL: {
         # Payment instruments
         "financial information",
         "payment information",
+        "financial data",
+        "payment data",
         "credit card number",
         "credit card",
         "debit card number",
@@ -150,6 +159,8 @@ CATEGORY_MAPPINGS = {
         "payment history",
         "billing history",
         "order history",
+        "shopping history",
+        "purchase data",
 
         # Financial standing
         "credit rating",
@@ -170,6 +181,9 @@ CATEGORY_MAPPINGS = {
         "credentials",
         "login credentials",
         "authentication credentials",
+        "login information",
+        "authentication information",
+        "authentication data",
 
         # Tokens and keys
         "authentication token",
@@ -207,6 +221,7 @@ CATEGORY_MAPPINGS = {
         "geolocation",
         "geographic location",
         "geographical location",
+        "geo-location",
 
         # Precise location
         "precise location",
@@ -261,6 +276,7 @@ CATEGORY_MAPPINGS = {
         "websites visited",
         "visit timestamps",
         "access times",
+        "pages visited",
 
         # Cookies and tracking
         "cookies",
@@ -268,24 +284,6 @@ CATEGORY_MAPPINGS = {
         "web beacons",
         "tracking pixels",
         "pixel tags",
-
-        # User activity (web-related)
-        "user activity",
-        "online activity",
-        "internet activity",
-        "network activity",
-        "click data",
-        "clicks",
-        "scroll data",
-        "mouse position",
-        "keystroke logging",
-        "keystroke data",
-
-        # Application usage
-        "application list",
-        "installed applications",
-        "app usage",
-        "extension list",
 
         # HTTP data
         "http headers",
@@ -295,25 +293,101 @@ CATEGORY_MAPPINGS = {
 
         # Log data
         "log data",
+        "access logs",
+    },
+
+    DataCategory.USER_ACTIVITY: {
+        # Interaction data
+        "user activity",
+        "user activity data",
+        "online activity",
+        "internet activity",
+        "network activity",
+        "activity data",
+        "user behavior",
+
+        # Click/mouse data
+        "click data",
+        "clicks",
+        "mouse position",
+        "mouse movements",
+        "scroll data",
+        "scroll position",
+
+        # Keystroke data
+        "keystroke logging",
+        "keystroke data",
+        "keystrokes",
+        "typing data",
+
+        # Network monitoring
+        "network monitoring",
+        "traffic data",
+        "network traffic",
+
+        # Usage data
         "usage data",
         "usage information",
-        "access logs",
+        "usage patterns",
+        "interaction data",
+
+        # Application usage
+        "application list",
+        "installed applications",
+        "app usage",
+        "extension list",
+    },
+
+    DataCategory.WEBSITE_CONTENT: {
+        # Page content
+        "website content",
+        "web content",
+        "page content",
+        "site content",
+
+        # Text content
+        "text",
+        "text content",
+        "page text",
+
+        # Media content
+        "images",
+        "sounds",
+        "videos",
+        "audio",
+        "media",
+        "media content",
+
+        # Links
+        "hyperlinks",
+        "links",
+        "urls",
+
+        # Form data
+        "form data",
+        "form content",
+        "form inputs",
+
+        # Document content
+        "document content",
+        "documents",
+        "files",
+        "file content",
     },
 }
 
 
 # Chrome Web Store disclosure category to our category mapping
-# The Chrome Web Store uses specific category names in their disclosures
 CHROME_DISCLOSURE_MAPPINGS = {
     "Personally identifiable information": DataCategory.PII,
-    "Personal communications": DataCategory.PII,  # Included in PII
+    "Personal communications": DataCategory.PII,
     "Financial and payment information": DataCategory.FINANCIAL,
     "Authentication information": DataCategory.AUTHENTICATION,
     "Location": DataCategory.LOCATION,
     "Web history": DataCategory.WEB_HISTORY,
-    "User activity": DataCategory.WEB_HISTORY,  # User activity often relates to web history
-    "Website content": None,  # This is often about what the extension accesses, not collects
-    "Health information": None,  # Not in our 5 categories
+    "User activity": DataCategory.USER_ACTIVITY,
+    "Website content": DataCategory.WEBSITE_CONTENT,
+    "Health information": None,  # Not in our categories
 }
 
 
@@ -360,10 +434,12 @@ def get_category_display_name(category: DataCategory) -> str:
     """Get human-readable display name for a category."""
     names = {
         DataCategory.PII: "PII",
-        DataCategory.FINANCIAL: "Financial/Payment",
-        DataCategory.AUTHENTICATION: "Authentication",
+        DataCategory.FINANCIAL: "Financial",
+        DataCategory.AUTHENTICATION: "Auth",
         DataCategory.LOCATION: "Location",
         DataCategory.WEB_HISTORY: "Web History",
+        DataCategory.USER_ACTIVITY: "User Activity",
+        DataCategory.WEBSITE_CONTENT: "Website Content",
     }
     return names.get(category, category.value)
 
@@ -388,6 +464,8 @@ if __name__ == "__main__":
     Financial and payment information
     Location
     Web history
+    User activity
+    Website content
     """
 
     categories = parse_chrome_disclosure_categories(test_disclosure)

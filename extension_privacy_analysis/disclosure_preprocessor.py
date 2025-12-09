@@ -20,37 +20,51 @@ from typing import Optional
 import anthropic
 
 
-# Default prompt template for Claude to transform disclosures
-TRANSFORMATION_PROMPT = """You are a privacy policy text converter. Your task is to transform Chrome Web Store developer disclosures into natural language privacy policy text that can be analyzed by NLP tools.
+# Improved prompt template optimized for PoliGraph's verb patterns
+TRANSFORMATION_PROMPT = """You are converting a Chrome Web Store developer disclosure into privacy policy text that an NLP system can parse.
 
-IMPORTANT RULES:
-1. Convert each data category mentioned into explicit collection statements
-2. Use active voice with the extension/company as the subject (e.g., "We collect...", "[Extension Name] collects...")
-3. Expand the "For example" items into the sentence naturally
-4. For NEGATIVE declarations (e.g., "Not being sold"), convert them but clearly mark the action being negated
-5. Remove bullet points and create flowing paragraphs
-6. Be explicit about what data types are collected
-7. If the disclosure says they "handle" data, convert it to "collect and use"
+The NLP system looks for EXPLICIT data collection statements using these verbs:
+- COLLECT: collect, gather, obtain, receive, acquire, request
+- USE: use, access, process, utilize, analyze
+- SHARE: share, disclose, provide, transfer, transmit
+- STORE: store, save, retain, maintain, keep, record
+
+CRITICAL RULES:
+1. For EACH data category mentioned, write a SEPARATE sentence using "We collect" or "[Extension] collects"
+2. List SPECIFIC data types, not just categories. Expand "For example:" items into the sentence.
+3. Use ACTIVE VOICE: "We collect your email address" NOT "Email addresses may be collected"
+4. Make each sentence STANDALONE - the NLP processes sentences independently
+5. Be EXPLICIT and REDUNDANT - repeat the company name in each sentence
 
 INPUT DISCLOSURE:
 {disclosure_text}
 
 EXTENSION NAME: {extension_name}
 
-OUTPUT FORMAT:
-Produce a natural language privacy policy excerpt that explicitly states what data is collected. Structure it like a real privacy policy section.
+Transform this into privacy policy paragraphs. For each data category mentioned, write explicit sentences.
 
-For example, if the input mentions:
+EXAMPLE INPUT:
 "Personally identifiable information
 For example: name, address, email address"
 
-Output something like:
-"[Extension Name] collects personally identifiable information, including your name, address, and email address."
+EXAMPLE OUTPUT:
+"We collect personally identifiable information. We collect your name. We collect your address. We collect your email address. We store this personal information on our servers."
 
-If the disclosure mentions that data is NOT sold or NOT used for certain purposes, include those as separate statements like:
-"[Extension Name] does not sell your data to third parties."
+EXAMPLE INPUT:
+"User activity
+For example: clicks, mouse position, scroll"
 
-Now transform the disclosure:"""
+EXAMPLE OUTPUT:
+"We collect user activity data. We collect information about your clicks. We collect your mouse position. We collect scroll data. We monitor your network activity."
+
+EXAMPLE INPUT:
+"Website content
+For example: text, images, sounds, videos"
+
+EXAMPLE OUTPUT:
+"We access website content. We collect text from webpages. We access images on websites you visit. We collect sounds and videos. We gather hyperlinks from web pages."
+
+Now transform the disclosure. Write one paragraph per data category, with multiple explicit collection statements:"""
 
 
 class DisclosurePreprocessor:
@@ -93,7 +107,7 @@ class DisclosurePreprocessor:
 
         # Then use Claude for sophisticated transformation
         try:
-            transformed = self._claude_transform(preprocessed, extension_name)
+            transformed = self._claude_transform(disclosure_text, extension_name)
             return transformed
         except Exception as e:
             print(f"Warning: Claude transformation failed ({e}), using rule-based fallback")
@@ -101,92 +115,132 @@ class DisclosurePreprocessor:
 
     def _rule_based_preprocessing(self, disclosure_text: str, extension_name: str) -> str:
         """
-        Apply rule-based preprocessing before Claude transformation.
-        This handles common patterns and ensures a baseline transformation.
+        Apply rule-based preprocessing - creates explicit collection statements.
+        This is the fallback when Claude API is not available.
         """
         text = disclosure_text
+        output_lines = []
 
         # Check if this is a "no data collection" disclosure
         if "will not collect or use your data" in text.lower():
             return f"{extension_name} does not collect or use any user data."
 
-        # Replace "handles the following" with collection language
-        text = re.sub(
-            r'handles the following:',
-            'collects and processes the following types of data:',
-            text,
-            flags=re.IGNORECASE
-        )
+        # Parse each category and generate explicit statements
+        categories = {
+            "Personally identifiable information": {
+                "intro": f"We collect personally identifiable information.",
+                "items": ["name", "address", "email address", "age", "identification number"],
+                "extra": [
+                    f"We collect your name.",
+                    f"We collect your email address.",
+                    f"We collect your postal address.",
+                    f"We store personal information.",
+                ]
+            },
+            "Personal communications": {
+                "intro": f"We collect personal communications.",
+                "items": ["emails", "texts", "chat messages"],
+                "extra": [
+                    f"We access your emails.",
+                    f"We collect your text messages.",
+                    f"We collect chat messages.",
+                ]
+            },
+            "Financial and payment information": {
+                "intro": f"We collect financial and payment information.",
+                "items": ["transactions", "credit card numbers", "credit ratings", "financial statements", "payment history"],
+                "extra": [
+                    f"We collect transaction data.",
+                    f"We collect credit card information.",
+                    f"We collect payment history.",
+                    f"We store financial information.",
+                ]
+            },
+            "Authentication information": {
+                "intro": f"We collect authentication information.",
+                "items": ["passwords", "credentials", "security question", "PIN"],
+                "extra": [
+                    f"We collect your password.",
+                    f"We collect login credentials.",
+                    f"We store authentication data.",
+                ]
+            },
+            "Location": {
+                "intro": f"We collect location data.",
+                "items": ["region", "IP address", "GPS coordinates"],
+                "extra": [
+                    f"We collect your IP address.",
+                    f"We collect GPS coordinates.",
+                    f"We collect your geographic location.",
+                    f"We store location information.",
+                ]
+            },
+            "Web history": {
+                "intro": f"We collect web history.",
+                "items": ["browsing history", "page visits", "visit timestamps"],
+                "extra": [
+                    f"We collect your browsing history.",
+                    f"We collect page visits.",
+                    f"We collect visit timestamps.",
+                    f"We store web history data.",
+                ]
+            },
+            "User activity": {
+                "intro": f"We collect user activity data.",
+                "items": ["network monitoring", "clicks", "mouse position", "scroll", "keystroke logging"],
+                "extra": [
+                    f"We monitor network activity.",
+                    f"We collect click data.",
+                    f"We collect mouse position.",
+                    f"We collect scroll data.",
+                    f"We collect keystroke data.",
+                ]
+            },
+            "Website content": {
+                "intro": f"We access website content.",
+                "items": ["text", "images", "sounds", "videos", "hyperlinks"],
+                "extra": [
+                    f"We collect text from websites.",
+                    f"We access images on web pages.",
+                    f"We collect videos.",
+                    f"We gather hyperlinks.",
+                ]
+            },
+        }
 
-        # Convert data category headers to sentences
-        category_patterns = [
-            (r'Personally identifiable information\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects personally identifiable information including \\1.'),
-            (r'Personal communications\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects personal communications including \\1.'),
-            (r'Financial and payment information\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects financial and payment information including \\1.'),
-            (r'Authentication information\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects authentication information including \\1.'),
-            (r'Location\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects location data including \\1.'),
-            (r'Web history\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects web history including \\1.'),
-            (r'User activity\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects user activity data including \\1.'),
-            (r'Website content\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} accesses website content including \\1.'),
-            (r'Health information\s*\nFor example:\s*([^\n]+)',
-             f'{extension_name} collects health information including \\1.'),
-        ]
-
-        for pattern, replacement in category_patterns:
-            text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+        for category_name, category_data in categories.items():
+            if category_name.lower() in text.lower():
+                output_lines.append(category_data["intro"])
+                output_lines.extend(category_data["extra"])
+                output_lines.append("")  # Blank line between categories
 
         # Handle negative declarations
-        negative_patterns = [
-            (r'Not being sold to third parties[^\.]*',
-             f'{extension_name} does not sell user data to third parties.'),
-            (r'Not being used or transferred for purposes.+?core functionality',
-             f'{extension_name} does not use data for purposes unrelated to its core functionality.'),
-            (r'Not being used or transferred to determine creditworthiness[^\.]*',
-             f'{extension_name} does not use data for creditworthiness determination.'),
-        ]
+        if "not being sold" in text.lower():
+            output_lines.append(f"We do not sell your data to third parties.")
+        if "not being used or transferred for purposes" in text.lower():
+            output_lines.append(f"We do not use data for purposes unrelated to core functionality.")
 
-        for pattern, replacement in negative_patterns:
-            text = re.sub(pattern, replacement, text, flags=re.IGNORECASE | re.DOTALL)
+        if not output_lines:
+            # Fallback to basic transformation
+            text = re.sub(r'handles the following:', 'collects the following data:', text, flags=re.IGNORECASE)
+            text = re.sub(r'^Privacy practices\s*\n', '', text)
+            text = re.sub(r'has disclosed the following information[^\.]+\.', '', text)
+            return text
 
-        # Clean up "This developer declares that your data is" section
-        text = re.sub(
-            r'This developer declares that your data is\s*',
-            '\n\nRegarding data usage practices: ',
-            text,
-            flags=re.IGNORECASE
-        )
+        return "\n".join(output_lines)
 
-        # Remove header line
-        text = re.sub(r'^Privacy practices\s*\n', '', text)
-        text = re.sub(r'has disclosed the following information[^\.]+\.', '', text)
-        text = re.sub(r'More detailed information can be found[^\.]+\.', '', text)
-
-        # Clean up whitespace
-        text = re.sub(r'\n{3,}', '\n\n', text)
-        text = text.strip()
-
-        return text
-
-    def _claude_transform(self, preprocessed_text: str, extension_name: str) -> str:
+    def _claude_transform(self, disclosure_text: str, extension_name: str) -> str:
         """
-        Use Claude to transform the preprocessed disclosure into natural language.
+        Use Claude to transform the disclosure into natural language.
         """
         prompt = TRANSFORMATION_PROMPT.format(
-            disclosure_text=preprocessed_text,
+            disclosure_text=disclosure_text,
             extension_name=extension_name
         )
 
         message = self.client.messages.create(
             model=self.model,
-            max_tokens=1024,
+            max_tokens=2048,
             messages=[
                 {"role": "user", "content": prompt}
             ]
@@ -270,7 +324,7 @@ def preprocess_disclosure(disclosure_text: str, extension_name: str,
 
 
 if __name__ == "__main__":
-    # Test with the Grammarly example from the user's prompt
+    # Test with the Grammarly example
     test_disclosure = """Privacy practices
 Grammarly: AI Writing Assistant and Grammar Checker App has disclosed the following information regarding the collection and usage of your data. More detailed information can be found in the developer's privacy policy.
 
