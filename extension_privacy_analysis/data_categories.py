@@ -36,6 +36,12 @@ CATEGORY_MAPPINGS = {
         "personal data",
         "pii",
 
+        # Policy-specific category headers
+        "identity data",
+        "contact data",
+        "profile data",
+        "demographic data",
+
         # Names
         "name",
         "real name",
@@ -108,6 +114,9 @@ CATEGORY_MAPPINGS = {
         "avatar",
         "user profile",
         "account information",
+        "account credentials",
+        "account settings",
+        "preferences",
 
         # Biometrics
         "biometric data",
@@ -124,6 +133,12 @@ CATEGORY_MAPPINGS = {
         "sms content",
         "chat messages",
         "communications",
+
+        # Feedback and surveys
+        "survey responses",
+        "reviews",
+        "ratings",
+        "feedback",
     },
 
     DataCategory.FINANCIAL: {
@@ -150,6 +165,9 @@ CATEGORY_MAPPINGS = {
         "routing number",
         "iban",
         "swift code",
+        "recipient account",
+        "third-party recipient account",
+        "payee account",
 
         # Transaction data
         "transaction history",
@@ -161,6 +179,8 @@ CATEGORY_MAPPINGS = {
         "order history",
         "shopping history",
         "purchase data",
+        "order information",
+        "purchase information",
 
         # Financial standing
         "credit rating",
@@ -169,6 +189,7 @@ CATEGORY_MAPPINGS = {
         "financial statements",
         "income",
         "salary",
+        "financial and payment information",
     },
 
     DataCategory.AUTHENTICATION: {
@@ -184,6 +205,13 @@ CATEGORY_MAPPINGS = {
         "login information",
         "authentication information",
         "authentication data",
+
+        # Third-party auth
+        "third-party authentication data",
+        "oauth login",
+        "oauth",
+        "social login",
+        "sign-in data",
 
         # Tokens and keys
         "authentication token",
@@ -243,6 +271,9 @@ CATEGORY_MAPPINGS = {
         "country",
         "country of residence",
         "city-level location",
+        "time zone",
+        "time zone setting",
+        "timezone",
 
         # Network-based location
         "ip address",
@@ -278,6 +309,12 @@ CATEGORY_MAPPINGS = {
         "access times",
         "pages visited",
 
+        # URL data (commonly mentioned in policies)
+        "urls",
+        "url data",
+        "web addresses",
+        "visited urls",
+
         # Cookies and tracking
         "cookies",
         "cookie data",
@@ -294,6 +331,11 @@ CATEGORY_MAPPINGS = {
         # Log data
         "log data",
         "access logs",
+
+        # Technical data (often includes web history elements)
+        "technical data",
+        "browser type",
+        "browser version",
     },
 
     DataCategory.USER_ACTIVITY: {
@@ -330,12 +372,20 @@ CATEGORY_MAPPINGS = {
         "usage information",
         "usage patterns",
         "interaction data",
+        "how you use",
+        "service usage",
 
-        # Application usage
+        # Application/extension data
         "application list",
         "installed applications",
         "app usage",
         "extension list",
+        "browser extension version",
+        "extension version",
+        "operating system",
+        "platform",
+        "device information",
+        "device identifiers",
     },
 
     DataCategory.WEBSITE_CONTENT: {

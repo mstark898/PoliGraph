@@ -38,6 +38,7 @@ from extension_privacy_analysis.comparison_analysis import (
     save_results_csv,
     save_results_html
 )
+from extension_privacy_analysis.policy_text_analyzer import PolicyTextAnalyzer
 
 
 class ExtensionPrivacyPipeline:
@@ -68,6 +69,9 @@ class ExtensionPrivacyPipeline:
         self.preprocessor = None
         if self.api_key:
             self.preprocessor = DisclosurePreprocessor(api_key=self.api_key)
+
+        # Initialize the direct text analyzer for policy analysis
+        self.text_analyzer = PolicyTextAnalyzer()
 
     def analyze_extension(self, extension: Extension, skip_policy_crawl: bool = False) -> dict:
         """
@@ -140,9 +144,27 @@ class ExtensionPrivacyPipeline:
         # Step 4: Extract categories from both sources
         print(f"\n[4/4] Extracting data categories")
 
+        # Extract from PoliGraph graph if available
+        policy_graph_categories = set()
         if results.get("policy_analyzed"):
             policy_graph = policy_dir / "graph-original.yml"
-            results["policy_categories"] = self._extract_categories_from_graph(policy_graph)
+            policy_graph_categories = self._extract_categories_from_graph(policy_graph)
+
+        # Also extract directly from policy text using PolicyTextAnalyzer
+        policy_text_categories = set()
+        policy_html_path = policy_dir / "cleaned.html"
+        if policy_html_path.exists():
+            print(f"  - Running direct text analysis on policy...")
+            try:
+                policy_text_categories = self._extract_categories_from_text(policy_html_path)
+                print(f"  - Direct text analysis found: {[c.value for c in policy_text_categories]}")
+            except Exception as e:
+                print(f"  - Direct text analysis error: {e}")
+
+        # Combine results from both methods (union)
+        results["policy_categories"] = policy_graph_categories | policy_text_categories
+        results["policy_graph_categories"] = policy_graph_categories  # Keep track of source
+        results["policy_text_categories"] = policy_text_categories
 
         if results.get("disclosure_analyzed"):
             disclosure_graph = disclosure_dir / "graph-original.yml"
@@ -391,6 +413,19 @@ class ExtensionPrivacyPipeline:
 
         return categories
 
+    def _extract_categories_from_text(self, file_path: Path) -> set:
+        """
+        Extract data categories using direct text analysis.
+
+        This complements the PoliGraph NLP analysis by scanning for explicit
+        category mentions and data type keywords in the policy text.
+        """
+        try:
+            return self.text_analyzer.analyze_policy_file(file_path).keys()
+        except Exception as e:
+            print(f"  - Error in text analysis: {e}")
+            return set()
+
     def analyze_all(self, skip_policy_crawl: bool = False) -> list:
         """
         Analyze all configured extensions.
@@ -501,6 +536,10 @@ def main():
         jr = dict(r)
         if 'policy_categories' in jr:
             jr['policy_categories'] = [c.value for c in jr['policy_categories']]
+        if 'policy_graph_categories' in jr:
+            jr['policy_graph_categories'] = [c.value for c in jr['policy_graph_categories']]
+        if 'policy_text_categories' in jr:
+            jr['policy_text_categories'] = [c.value for c in jr['policy_text_categories']]
         if 'disclosure_categories' in jr:
             jr['disclosure_categories'] = [c.value for c in jr['disclosure_categories']]
         if 'disclosure_raw_categories' in jr:
