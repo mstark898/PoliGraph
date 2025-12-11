@@ -299,6 +299,7 @@ SECTION_ELEMENTS = frozenset({
 TEXT_CONTAINER_ELEMENTS = frozenset({
     "paragraph", "text", "link", "statictext", "label", "text container", "text leaf", "superscript", "subscript",
     "cell", "columnheader", "rowheader", # TODO: table cells
+    "strong", "emphasis", "mark", "insertion", "deletion",  # text formatting elements
 })
 
 

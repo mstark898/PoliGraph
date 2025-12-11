@@ -42,7 +42,7 @@ def main():
             with open(os.path.join(d, "document.txt"), "w", encoding="utf-8") as fout:
                 fout.write(document.print_tree())
 
-        if use_gpu:
+        if use_gpu and torch.cuda.is_available():
             current_device = torch.cuda.current_device()
             gmem_total = torch.cuda.get_device_properties(current_device).total_memory
             gmem_reserved = torch.cuda.memory_reserved(current_device)

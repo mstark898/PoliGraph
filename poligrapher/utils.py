@@ -198,25 +198,13 @@ def label_all_phrases(doc: Doc) -> Doc:
 
 
 def setup_nlp_pipeline(ner_path: str):
-    if not ner_path:
-        with pkg_resources.path(poligrapher, "extra-data") as extra_data:
-            our_ner = spacy.load(extra_data / "named_entity_recognition")
-    else:
-        our_ner = spacy.load(ner_path)
+    # Use built-in spaCy NER instead of custom NER for now
+    nlp = spacy.load("en_core_web_trf")
 
-    nlp = spacy.load("en_core_web_trf", disable=["ner"])
-
-    # Disable spaCy's NER and use our NER
-    our_ner.replace_listeners("transformer", "ner", ["model.tok2vec"])
-    nlp.add_pipe(
-        "ner",
-        name="privacy_policy_ner",
-        source=our_ner,
-    )
     nlp.add_pipe(
         "label_all_phrases",
         name="label_all_phrases",
-        after="privacy_policy_ner",
+        after="ner",
     )
 
     return nlp

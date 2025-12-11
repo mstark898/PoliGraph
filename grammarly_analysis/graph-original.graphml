@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d3" for="edge" attr.name="text" attr.type="string"/>
+<key id="d2" for="edge" attr.name="relationship" attr.type="string"/>
+<key id="d1" for="node" attr.name="type" attr.type="string"/>
+<key id="d0" for="node" attr.name="label" attr.type="string"/>
+<graph edgedefault="directed"><node id="UNSPECIFIED_DATA">
+  <data key="d0">UNSPECIFIED_DATA</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="we">
+  <data key="d0">we</data>
+  <data key="d1">ACTOR</data>
+</node>
+<node id="phone number">
+  <data key="d0">phone number</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="email address">
+  <data key="d0">email address</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="internet activity">
+  <data key="d0">internet activity</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="contact information">
+  <data key="d0">contact information</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="personal information">
+  <data key="d0">personal information</data>
+  <data key="d1">DATA</data>
+</node>
+<edge source="we" target="phone number" id="e0">
+  <data key="d2">COLLECT</data>
+  <data key="d3">This includes: Account information: When you create an individual or organizational account, we collect information such as your email address, password, name, email preferences, job titles, and phone numbers.
+This includes: Account information: When you create an individual or organizational account, we collect information such as your email address, password, name, email preferences, job titles, and phone numbers.</data>
+</edge>
+<edge source="we" target="email address" id="e1">
+  <data key="d2">COLLECT</data>
+  <data key="d3">This includes: Account information: When you create an individual or organizational account, we collect information such as your email address, password, name, email preferences, job titles, and phone numbers.
+This includes: Account information: When you create an individual or organizational account, we collect information such as your email address, password, name, email preferences, job titles, and phone numbers.
+If you created an account using an email address belonging to your Organization, we may share your email address or other usage information with the administrators or representatives of that Organization.
+If you created an account using an email address belonging to your Organization, we may share your email address or other usage information with the administrators or representatives of that Organization.</data>
+</edge>
+<edge source="we" target="UNSPECIFIED_DATA" id="e2">
+  <data key="d2">COLLECT</data>
+  <data key="d3">If you use a single sign-on partner, like Google or Apple, we'll collect the information from them that you authorize.
+If you use a single sign-on partner, like Google or Apple, we'll collect the information from them that you authorize.
+Information We Collect
+
+We collect some information automatically.
+Information We Collect
+
+We collect some information automatically.
+We use the contact information and other information we receive about non-users through user content only to provide our products to you and will not use it to contact, advertise, or market to such individuals.
+We use the contact information and other information we receive about non-users through user content only to provide our products to you and will not use it to contact, advertise, or market to such individuals.
+We use information to:
+We use information to:
+Depending on your settings, we do use some of the other information we collect (such as your email address, the types of products you have purchased, your usage data, and inferences we may have made about you) to send marketing communications, advertise our products to you on third-party sites and services, and otherwise promote our products and conduct market research.
+Depending on your settings, we do use some of the other information we collect (such as your email address, the types of products you have purchased, your usage data, and inferences we may have made about you) to send marketing communications, advertise our products to you on third-party sites and services, and otherwise promote our products and conduct market research.
+When We Disclose Information
+
+We disclose information to the types of recipients and in the scenarios described below.
+When We Disclose Information
+
+We disclose information to the types of recipients and in the scenarios described below.
+For example, where we process information for marketing purposes or with your consent, we process the data until you ask us to stop and for a short period after this (to allow us to implement your requests).
+For example, where we process information for marketing purposes or with your consent, we process the data until you ask us to stop and for a short period after this (to allow us to implement your requests).
+We may transfer and process your data outside of the country where you live.
+We may transfer and process your data outside of the country where you live.
+When we process information that is considered "sensitive" under State Privacy Laws (such as when such information is included in your user content), we use such data only for the legally permitted purposes described above, in the same way we process user content generally.
+When we process information that is considered "sensitive" under State Privacy Laws (such as when such information is included in your user content), we use such data only for the legally permitted purposes described above, in the same way we process user content generally.
+If there's a contractual obligation for us to process your information to fulfill our contract with you, or to take steps at your request prior to entering into a contract with you: contractual necessity (Art. 6 (1)(b) GDPR/UK GDPR) Otherwise, we process your information because we have a legitimate interest in providing a relevant, well-functioning service to you (Art.6(1)(f) GDPR/ UK GDPR)
+If there's a contractual obligation for us to process your information to fulfill our contract with you, or to take steps at your request prior to entering into a contract with you: contractual necessity (Art. 6 (1)(b) GDPR/UK GDPR) Otherwise, we process your information because we have a legitimate interest in providing a relevant, well-functioning service to you (Art.6(1)(f) GDPR/ UK GDPR)</data>
+</edge>
+<edge source="we" target="internet activity" id="e3">
+  <data key="d2">COLLECT</data>
+  <data key="d3">This includes: Usage data: We collect usage data about how you interact with us and our products, including your activity on our websites and apps and your interactions with our marketing communications.
+This includes: Usage data: We collect usage data about how you interact with us and our products, including your activity on our websites and apps and your interactions with our marketing communications.
+We collect usage data about actions you take using our products, such as logs of which features you use and data from these features, like read receipts, security logs, as well as quality and performance information about the operation of our products.
+We collect usage data about actions you take using our products, such as logs of which features you use and data from these features, like read receipts, security logs, as well as quality and performance information about the operation of our products.
+For example, we process your user content and usage data to show you context-appropriate and personalized suggestions for writing, communications, and scheduling, to prioritize your workflows, and to offer tips on optimizing your use of our products.
+For example, we process your user content and usage data to show you context-appropriate and personalized suggestions for writing, communications, and scheduling, to prioritize your workflows, and to offer tips on optimizing your use of our products.
+For example, we process your user content and usage data to show you context-appropriate and personalized suggestions for writing, communications, and scheduling, to prioritize your workflows, and to offer tips on optimizing your use of our products.
+For example, we analyze usage data to help us decide what new features to build or improve.
+For example, we analyze usage data to help us decide what new features to build or improve.</data>
+</edge>
+<edge source="we" target="contact information" id="e4">
+  <data key="d2">COLLECT</data>
+  <data key="d3">We use the contact information and other information we receive about non-users through user content only to provide our products to you and will not use it to contact, advertise, or market to such individuals.
+We use the contact information and other information we receive about non-users through user content only to provide our products to you and will not use it to contact, advertise, or market to such individuals.</data>
+</edge>
+<edge source="we" target="personal information" id="e5">
+  <data key="d2">COLLECT</data>
+  <data key="d3">We may also disclose your personal information to protect ourselves, our users, or others from fraud, abuse, or other illegal or potentially harmful activities.
+We may also disclose your personal information to protect ourselves, our users, or others from fraud, abuse, or other illegal or potentially harmful activities.
+We retain personal data for as long as necessary to provide our products to you, to complete the transactions you have requested, to comply with our legal obligations, to resolve disputes, and for other legitimate business purposes.
+We retain personal data for as long as necessary to provide our products to you, to complete the transactions you have requested, to comply with our legal obligations, to resolve disputes, and for other legitimate business purposes.</data>
+</edge>
+</graph></graphml>

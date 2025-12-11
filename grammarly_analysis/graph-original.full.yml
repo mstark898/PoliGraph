@@ -1,0 +1,111 @@
+directed: true
+multigraph: true
+graph: {}
+links:
+- source: we
+  target: UNSPECIFIED_DATA
+  key: COLLECT
+  text:
+  - Depending on your settings, we do use some of the other information we collect
+    (such as your email address, the types of products you have purchased, your usage
+    data, and inferences we may have made about you) to send marketing communications,
+    advertise our products to you on third-party sites and services, and otherwise
+    promote our products and conduct market research.
+  - For example, where we process information for marketing purposes or with your
+    consent, we process the data until you ask us to stop and for a short period after
+    this (to allow us to implement your requests).
+  - 'If there''s a contractual obligation for us to process your information to fulfill
+    our contract with you, or to take steps at your request prior to entering into
+    a contract with you: contractual necessity (Art. 6 (1)(b) GDPR/UK GDPR) Otherwise,
+    we process your information because we have a legitimate interest in providing
+    a relevant, well-functioning service to you (Art.6(1)(f) GDPR/ UK GDPR)'
+  - If you use a single sign-on partner, like Google or Apple, we'll collect the information
+    from them that you authorize.
+  - 'Information We Collect
+
+
+    We collect some information automatically.'
+  - We may transfer and process your data outside of the country where you live.
+  - 'We use information to:'
+  - We use the contact information and other information we receive about non-users
+    through user content only to provide our products to you and will not use it to
+    contact, advertise, or market to such individuals.
+  - 'When We Disclose Information
+
+
+    We disclose information to the types of recipients and in the scenarios described
+    below.'
+  - When we process information that is considered "sensitive" under State Privacy
+    Laws (such as when such information is included in your user content), we use
+    such data only for the legally permitted purposes described above, in the same
+    way we process user content generally.
+  purposes: {}
+- source: we
+  target: contact information
+  key: COLLECT
+  text:
+  - We use the contact information and other information we receive about non-users
+    through user content only to provide our products to you and will not use it to
+    contact, advertise, or market to such individuals.
+  purposes: {}
+- source: we
+  target: email address
+  key: COLLECT
+  text:
+  - If you created an account using an email address belonging to your Organization,
+    we may share your email address or other usage information with the administrators
+    or representatives of that Organization.
+  - 'This includes: Account information: When you create an individual or organizational
+    account, we collect information such as your email address, password, name, email
+    preferences, job titles, and phone numbers.'
+  purposes: {}
+- source: we
+  target: internet activity
+  key: COLLECT
+  text:
+  - For example, we analyze usage data to help us decide what new features to build
+    or improve.
+  - For example, we process your user content and usage data to show you context-appropriate
+    and personalized suggestions for writing, communications, and scheduling, to prioritize
+    your workflows, and to offer tips on optimizing your use of our products.
+  - 'This includes: Usage data: We collect usage data about how you interact with
+    us and our products, including your activity on our websites and apps and your
+    interactions with our marketing communications.'
+  - We collect usage data about actions you take using our products, such as logs
+    of which features you use and data from these features, like read receipts, security
+    logs, as well as quality and performance information about the operation of our
+    products.
+  purposes: {}
+- source: we
+  target: personal information
+  key: COLLECT
+  text:
+  - We may also disclose your personal information to protect ourselves, our users,
+    or others from fraud, abuse, or other illegal or potentially harmful activities.
+  - We retain personal data for as long as necessary to provide our products to you,
+    to complete the transactions you have requested, to comply with our legal obligations,
+    to resolve disputes, and for other legitimate business purposes.
+  purposes: {}
+- source: we
+  target: phone number
+  key: COLLECT
+  text:
+  - 'This includes: Account information: When you create an individual or organizational
+    account, we collect information such as your email address, password, name, email
+    preferences, job titles, and phone numbers.'
+  purposes: {}
+nodes:
+- type: ACTOR
+  id: we
+- type: DATA
+  id: UNSPECIFIED_DATA
+- type: DATA
+  id: contact information
+- type: DATA
+  id: email address
+- type: DATA
+  id: internet activity
+- type: DATA
+  id: personal information
+- type: DATA
+  id: phone number

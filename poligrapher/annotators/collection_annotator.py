@@ -364,7 +364,8 @@ class CollectionAnnotator(BaseAnnotator):
                 tok = bfs_queue[i]
                 i += 1
 
-                if tok.ent_type_ == target_type:
+                # Accept "NN" as a valid "DATA" type for our modified NER setup
+                if tok.ent_type_ == target_type or (target_type == "DATA" and tok.ent_type_ == "NN"):
                     return True
                 elif tok.ent_type_ == "NN":
                     for _, linked_token, relationship in document.get_all_links(tok):

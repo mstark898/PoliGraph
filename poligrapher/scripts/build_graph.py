@@ -35,7 +35,10 @@ class GraphBuilder:
         self.entity_mapper = EntityMatcher(entity_map)
         self.data_phrase_normalizer = RuleBasedPhraseNormalizer(phrase_map_rules["DATA"])
         self.actor_phrase_normalizer = RuleBasedPhraseNormalizer(phrase_map_rules["ACTOR"])
-        self.purpose_classifier = PurposeClassifier(purpose_classification_model_path)
+        if purpose_classification_model_path:
+            self.purpose_classifier = PurposeClassifier(purpose_classification_model_path)
+        else:
+            self.purpose_classifier = None
         self.variant = variant
 
     def build_graph(self, document: PolicyDocument):
@@ -54,8 +57,11 @@ class GraphBuilder:
             for src in document.token_relationship.nodes:
                 token = document.get_token_with_src(src)
 
+                # Accept "NN" as "DATA" for our modified NER setup
                 if (ent_type := token.ent_type_) in ("DATA", "ACTOR"):
                     token_type_map[src] = ent_type
+                elif ent_type == "NN":
+                    token_type_map[src] = "DATA"
 
         def build_collect_graph():
             """Step 2: Infer phrase types using COLLECT-like edges and copy
@@ -97,10 +103,11 @@ class GraphBuilder:
                         purposes.append(purpose_text)
                         purpose_text_to_labels[purpose_text] = []
 
-            for (text, labels), predictions in zip(purpose_text_to_labels.items(),
-                                                   self.purpose_classifier(list(purpose_text_to_labels))):
-                logging.info("Purpose %r -> %s", text, predictions)
-                labels.extend(predictions)
+            if self.purpose_classifier:
+                for (text, labels), predictions in zip(purpose_text_to_labels.items(),
+                                                       self.purpose_classifier(list(purpose_text_to_labels))):
+                    logging.info("Purpose %r -> %s", text, predictions)
+                    labels.extend(predictions)
 
             for data_type_src, purpose_text_list in data_type_purposes.items():
                 edge_purposes = set()
@@ -451,7 +458,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--nlp", default="", help="NLP model directory")
-    parser.add_argument("--purpose-classification", default="", help="Purpose classification model directory")
+    parser.add_argument("--purpose-classification", default=None, help="Purpose classification model directory")
     parser.add_argument("-p", "--phrase-map", default="", help="Path to phrase_map.yml")
     parser.add_argument("-e", "--entity-info", default="", help="Path to entity_info.json")
     parser.add_argument("-v", "--variant", choices=["original", "extended", "per_sentence", "per_section"],
@@ -462,8 +469,12 @@ def main():
 
     # Load resources from extra-data folder unless overridden in the args
     with pkg_resources.path(poligrapher, "extra-data") as extra_data:
-        if not args.purpose_classification:
-            args.purpose_classification = extra_data / "purpose_classification"
+        if args.purpose_classification is None:
+            purpose_model_path = extra_data / "purpose_classification"
+            if purpose_model_path.exists():
+                args.purpose_classification = purpose_model_path
+            else:
+                args.purpose_classification = None
 
         if not args.phrase_map:
             args.phrase_map = extra_data / "phrase_map.yml"

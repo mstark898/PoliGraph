@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d3" for="edge" attr.name="text" attr.type="string"/>
+<key id="d2" for="edge" attr.name="relationship" attr.type="string"/>
+<key id="d1" for="node" attr.name="type" attr.type="string"/>
+<key id="d0" for="node" attr.name="label" attr.type="string"/>
+<graph edgedefault="directed"><node id="UNSPECIFIED_DATA">
+  <data key="d0">UNSPECIFIED_DATA</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="we">
+  <data key="d0">we</data>
+  <data key="d1">ACTOR</data>
+</node>
+<node id="ip address">
+  <data key="d0">ip address</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="personal identifier">
+  <data key="d0">personal identifier</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="aggregate / deidentified / pseudonymized information">
+  <data key="d0">aggregate / deidentified / pseudonymized information</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="personal information">
+  <data key="d0">personal information</data>
+  <data key="d1">DATA</data>
+</node>
+<node id="cookie / pixel tag">
+  <data key="d0">cookie / pixel tag</data>
+  <data key="d1">DATA</data>
+</node>
+<edge source="we" target="UNSPECIFIED_DATA" id="e0">
+  <data key="d2">COLLECT</data>
+  <data key="d3">We take your privacy seriously and want you to understand exactly what information we collect, how we process that information, which pieces of information you can request us to remove, and how to contact us about this policy.
+We take your privacy seriously and want you to understand exactly what information we collect, how we process that information, which pieces of information you can request us to remove, and how to contact us about this policy.
+When you donate from the AdBlock website, we collect and store all information, excluding the credit card number, given during the payment process.
+When you donate from the AdBlock website, we collect and store all information, excluding the credit card number, given during the payment process.
+We utilize this information to help us identify and fix potential issues with AdBlock as well as to determine the performance of AdBlock features.
+We utilize this information to help us identify and fix potential issues with AdBlock as well as to determine the performance of AdBlock features.
+Privacy Policy
+
+Information AdBlock collects
+
+We use these to analyze website traffic.
+Privacy Policy
+
+Information AdBlock collects
+
+We use these to analyze website traffic.
+Ensuring the security of our extension is in your and our vital interest and therefore we use such data.
+Ensuring the security of our extension is in your and our vital interest and therefore we use such data.
+Furthermore, we collect and process such data to ensure that our website and extension are constantly improved and adjusted to the changing requirements for an efficient usability and the technical environment.
+Ensuring the usability of our websites and of our extension is in your and our vital interest and therefore we use such data.
+Contact
+
+We use these to analyze website traffic.
+Contact
+
+We use these to analyze website traffic.</data>
+</edge>
+<edge source="we" target="ip address" id="e1">
+  <data key="d2">COLLECT</data>
+  <data key="d3">Privacy Policy
+
+Information AdBlock collects
+
+When you visit the AdBlock website we collect IP address, unique ID, logging of some of the button clicks on our website (clicking download, for example) and user event logging data.
+Privacy Policy
+
+Information AdBlock collects
+
+When you visit the AdBlock website we collect IP address, unique ID, logging of some of the button clicks on our website (clicking download, for example) and user event logging data.
+When the AdBlock extension communicates with AdBlock servers, we receive the computer's IP address.
+When the AdBlock extension communicates with AdBlock servers, we receive the computer's IP address.</data>
+</edge>
+<edge source="we" target="personal identifier" id="e2">
+  <data key="d2">COLLECT</data>
+  <data key="d3">We store aggregate statistics about the installation connected with each user ID indefinitely.
+We store aggregate statistics about the installation connected with each user ID indefinitely.</data>
+</edge>
+<edge source="we" target="aggregate / deidentified / pseudonymized information" id="e3">
+  <data key="d2">COLLECT</data>
+  <data key="d3">We sometimes share anonymized and aggregated information that cannot be associated with an individual with third parties or the public.
+We sometimes share anonymized and aggregated information that cannot be associated with an individual with third parties or the public.</data>
+</edge>
+<edge source="we" target="personal information" id="e4">
+  <data key="d2">COLLECT</data>
+  <data key="d3">Privacy Policy
+
+What is the legal basis?
+
+We collect and process your personal information in compliance with the GDPR and the applicable EU laws.
+Privacy Policy
+
+What is the legal basis?
+
+We collect and process your personal information in compliance with the GDPR and the applicable EU laws.
+To build and improve upon products and features more efficiently, we share personal data, in compliance with GDPR, within the context of a joint controllership with partners.
+To build and improve upon products and features more efficiently, we share personal data, in compliance with GDPR, within the context of a joint controllership with partners.
+You have the right to demand from us the erasure of your personal information, where - inter alia - one of the following grounds applies: If we no longer need your personal information for the aforementioned purposes.
+You have the right to demand from us the erasure of your personal information, where - inter alia - one of the following grounds applies: If we no longer need your personal information for the aforementioned purposes.</data>
+</edge>
+<edge source="we" target="cookie / pixel tag" id="e5">
+  <data key="d2">COLLECT</data>
+  <data key="d3">Contact
+
+In order to provide you with the best experience, we use some cookies on our website.
+Contact
+
+In order to provide you with the best experience, we use some cookies on our website.</data>
+</edge>
+</graph></graphml>
